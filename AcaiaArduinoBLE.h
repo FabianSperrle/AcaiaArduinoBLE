@@ -24,16 +24,28 @@
 #include "Arduino.h"
 #include <ArduinoBLE.h>
 
-enum scale_type{
+enum scale_type {
     OLD,    // Lunar (pre-2021)
     NEW,    // Lunar (2021), Pyxis
     GENERIC // Felicita Arc, etc
 };
 
-class AcaiaArduinoBLE{
+enum ConnectionState {
+    IDLE,
+    SCANNING,
+    CONNECTING,
+    DISCOVERING,
+    CONFIGURING,
+    CONNECTED,
+    FAILED
+};
+
+class AcaiaArduinoBLE {
     public:
         AcaiaArduinoBLE(bool debug);
         bool init(String = "");
+        bool updateConnection();
+        bool isConnecting();
         bool tare();
         bool startTimer();
         bool stopTimer();
@@ -43,6 +55,7 @@ class AcaiaArduinoBLE{
         bool heartbeatRequired();
         bool isConnected();
         bool newWeightAvailable();
+
     private:
         bool isScaleName(String);
 
@@ -58,9 +71,14 @@ class AcaiaArduinoBLE{
         long                _lastHeartBeat;
         bool                _connected;
         scale_type          _type;
-        bool                _debug; 
+        bool                _debug;
         long                _packetPeriod;
         long                _lastPacket;
+
+        ConnectionState     _connectionState;
+        unsigned long       _connectionStartTime;
+        String              _targetMac;
+        BLEDevice           _foundPeripheral;
 };
 
 #endif
