@@ -101,10 +101,10 @@ class AcaiaArduinoBLE {
         bool init(const String& = "");
         bool updateConnection();
         [[nodiscard]] bool isConnecting() const;
-        bool tare();
-        [[nodiscard]] bool startTimer() const;
-        [[nodiscard]] bool stopTimer() const;
-        [[nodiscard]] bool resetTimer() const;
+        void tare();
+        void startTimer() const;
+        void stopTimer() const;
+        void resetTimer() const;
         bool heartbeat();
         [[nodiscard]] float getWeight() const;
         [[nodiscard]] bool heartbeatRequired() const;
