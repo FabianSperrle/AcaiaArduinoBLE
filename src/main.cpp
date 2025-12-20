@@ -13,11 +13,15 @@ void setup() {
     // Note: BLE.begin() is handled internally by the library now
     // Optionally add your Mac Address as an argument: scale.init("##:##:##:##:##:##");
     scale.init();
-    scale.tare();
+
+    scale.updateConnection();
+
     scale.tare();
 }
 
 void loop() {
+    scale.updateConnection();
+
     // Send a heartbeat message to the acaia periodically to maintain connection
     if (scale.heartbeatRequired()) {
         scale.heartbeat();
