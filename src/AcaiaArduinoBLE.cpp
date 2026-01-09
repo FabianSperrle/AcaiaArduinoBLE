@@ -1106,8 +1106,10 @@ void AcaiaArduinoBLE::notifyCallback(const uint8_t *pData, size_t length) {
 }
 
 void AcaiaArduinoBLE::clearScanResults() {
-    if (_pBLEScan) {
+    if (_pBLEScan != nullptr) {
+        _pBLEScan->stop();
         _pBLEScan->clearResults();
+
         if (_debug) Serial.println("Cleared BLE scan results to free memory");
     }
 }
